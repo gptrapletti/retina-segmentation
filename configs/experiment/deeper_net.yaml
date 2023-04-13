@@ -1,0 +1,17 @@
+# @package _global_
+
+defaults:
+  - override /backbone: unet_monai_deeper
+  - override /trainer: trainer
+  - override /logger: mlflow
+  - override /transforms: geometric_higher_prob
+  - override /optimizer: adam
+
+trainer:
+  max_epochs: 50
+
+optimizer:
+  lr: 0.001
+
+logger:
+  run_name: "dice-loss-with-threshold"

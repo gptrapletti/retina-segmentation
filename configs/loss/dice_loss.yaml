@@ -1,0 +1,2 @@
+_target_: monai.losses.DiceLoss
+sigmoid: False # because the model already outputs prediction with sigmoid activation (thanks to the added torch.nn.Sigmoid() layer)

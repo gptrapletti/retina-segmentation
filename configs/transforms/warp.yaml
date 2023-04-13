@@ -1,0 +1,23 @@
+train_transforms:
+  _target_: monai.transforms.Compose
+  transforms:
+    - _target_: monai.transforms.RandRotateD
+      keys: ['image', 'mask']
+      range_x: [0, 180]
+      prob: 0.9
+    - _target_: monai.transforms.RandAxisFlipD
+      keys: ['image', 'mask']
+      prob: 0.9
+    - _target_: monai.transforms.Rand2DElasticD
+      keys: ['image', 'mask']
+      spacing: 10
+      magnitude_range: [2, 5]
+      prob: 0.3
+    - _target_: monai.transforms.ToTensorD
+      keys: ['image', 'mask']
+
+test_transforms:
+  _target_: monai.transforms.Compose
+  transforms:
+    - _target_: monai.transforms.ToTensorD
+      keys: ['image', 'mask']

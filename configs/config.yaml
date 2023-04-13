@@ -1,0 +1,32 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - datamodule: datamodule
+  - transforms: geometric
+  - backbone: unet_monai_deeper
+  - model: model
+  - metric: dice_metric
+  - loss: dice_loss
+  - optimizer: adam
+  - scheduler: rop
+  - trainer: trainer
+  - callbacks: callbacks
+  - logger: mlflow
+  - experiment: null
+
+core:
+  name: retina_segmentation
+
+hydra:
+  run:
+    dir: logs/runs/${core.name}/${now:%Y-%m-%d_%H-%M-%S}
+  sweep:
+    dir: logs/multiruns/${core.name}/${now:%Y-%m-%d_%H-%M-%S}
+    # subdir: ${multirun_subdir_beautify:${hydra.job.override_dirname}}
+  job:
+    chdir: true # required to save checkpoint in the logs dir
+
+task_name: 'retina_segmentation_task'
+
+best_model_checkpoint: ${oc.env:HOME}/retina/logs/runs/retina_segmentation/2023-03-09_14-39-30/checkpoints/epoch_epoch=049.ckpt

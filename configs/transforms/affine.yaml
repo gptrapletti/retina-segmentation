@@ -1,0 +1,38 @@
+train_transforms:
+  _target_: monai.transforms.Compose
+  transforms:
+    - _target_: monai.transforms.RandRotateD
+      keys: ['image', 'mask']
+      range_x: [0, 180]
+      prob: 0.9
+    - _target_: monai.transforms.RandAxisFlipD
+      keys: ['image', 'mask']
+      prob: 0.9
+    - _target_: monai.transforms.RandAffineD
+      keys: ['image', 'mask']
+      shear_range: [1.0, 2.0]
+      prob: 0.9
+    - _target_: monai.transforms.ToTensorD
+      keys: ['image', 'mask']
+
+test_transforms:
+  _target_: monai.transforms.Compose
+  transforms:
+    - _target_: monai.transforms.ToTensorD
+      keys: ['image', 'mask']
+
+
+
+# norm_mean: [0, 0, 0]
+# norm_std: [1, 1, 1]
+
+# test_transforms:
+#   _target_: monai.transforms.Compose
+#   transforms:
+#     # - _target_: monai.transforms.NormalizeIntensityD
+#     #   keys:
+#     #     - 'image'
+#     #   subtrahend: ${transforms.norm_mean}
+#     #   divisor: ${transforms.norm_std}
+#     - _target_: monai.transforms.ToTensorD
+#       keys: ['image', 'mask']

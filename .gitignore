@@ -1,0 +1,11 @@
+*.pyc
+*.tar
+
+.ipynb_checkpoints/
+data/
+lightning_logs/
+outputs/
+multirun/
+model_checkpoints/
+logs/
+__pychache__/

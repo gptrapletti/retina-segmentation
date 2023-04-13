@@ -1,0 +1,2 @@
+_target_: torchmetrics.Dice
+threshold: 0.5

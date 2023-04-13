@@ -1,0 +1,7 @@
+_target_: src.datamodule.RetinaDataModule
+train_data_path: ${oc.env:HOME}/retina/data/tiles/train_data.npz
+val_data_path: ${oc.env:HOME}/retina/data/tiles/val_data.npz
+test_data_path: ${oc.env:HOME}/retina/data/tiles/test_data.npz
+batch_size: 32
+train_transforms: ${transforms.train_transforms}
+test_transforms: ${transforms.test_transforms}
