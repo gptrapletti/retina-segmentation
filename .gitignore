@@ -9,3 +9,7 @@ multirun/
 model_checkpoints/
 logs/
 __pychache__/
+
+net.ipynb
+initializing.ipynb
+tests.ipynb
