@@ -1,0 +1,52 @@
+RETINA PROJECT
+
+EXPERIMENTS
+
+python train.py --multirun backbone.num_res_units=5,7
+→ val_loss e val_metric circa ugual e di 0.05 maggiori di 3 res units
+→ numero res unit influenza poco
+→ cmq teniamo 5 res units\
+
+python train.py experiment=deeper_net
+Per vedere se rete con 1 layers in piu' va meglio
+val_metric aumentata del 0.03, trianing lungo uguale
+→ teniamo 5 layers
+
+python train.py --multirun experiment=deeper_net optimizer.lr=0.001,0.00001
+per provare diversi lr
+con lr=0.001: 10% in piu' su val_loss e raggiunta solo in 40 epoche
+con lr=0.00001: convergenza troppo lenta, training interrotto.
+
+python train.py experiment=deeper_net optimizer.lr=0.01 logger.run_name=layers:5_skipcon:5_epochs:100_lr:0.01
+Per provare un lr intermedio e sopratutto per cambiare il nome della run_name sul MLFlow
+Convergenza (sempre 0.80) ma verso 30 epoche.
+
+python train.py experiment=deeper_net 
+optimizer.lr=0.005
+trainer.max_epochs=40 
+logger.run_name=layers:5_skipcon:5_epochs:40_lr:0.005
+Stesse performance
+
+
+
+
+
+SUMMARY
+
+PRINCIPALI COSE FATTE:
+Creata nuova repo su BitBucket.
+Data pre-processing per dividere il training set del DRIVE dataset (tot 20 immagini) in immagini per il training (14), validation (4) e test (2).
+Estrazioni delle tiles e relative GT da questi sets, creando file NPZ contenenti sia le tiles che le GTs.
+Studio come creare un dataset per un task di segmentazione e sperimentare con le transforms di Monai.
+Allenamento di una UNet instanziata con Monai, con dataset/dataloaders di Monai ma con uno standard PyTorch training. Calcolata performance in termini di AUC.
+Push di questi notebooks su branch master della repo.
+Creato nuovo branch per sviluppo versione basata su Lightning e Hydra.
+Creata classe Datamodule e prime configs di Hydra.
+Scrittura del src code e delle configs per training modello.
+Sperimentato con diversi esperimenti con diverse architetture della UNet, learning rates, transforms, loggando su MLFlow. Sia scrivendo YAML per esperimenti, sia modificando parametri da riga di comando, sia in run semplice che in multi-run.
+Test con il checkpoint del miglior modello, calcolando la Dice (come in validation) e la AUC (come repo Orobix).
+Pull request e merge.
+
+FUTURE STEPS:
+Provare ad allenare con piu' dati (training mio ~12 min, training repo Orobix ~20 h con 30 volte il numero di tiles, ma comunque GPU diverse!)
+Provare altre Loss (es una costum che penalizzi i FP, dato che il modello sembra eccedere nelle predizioni, cioe' predice righe piu' larghe).
